@@ -65,11 +65,12 @@ public class ResourceServerApplication {
 		@PreAuthorize("hasAuthority('SCOPE_email')")
 		public Map<String, Object> messages(JwtAuthenticationToken authentication) {
 
-			Map userAttributes = Collections.emptyMap();
-			userAttributes = authentication.getTokenAttributes();
+			System.out.println(authentication.getName());
+			Map userAttributes = authentication.getTokenAttributes();
 			System.out.println("Glaims : " + authentication.getToken().getClaims());
 			Jwt token = authentication.getToken();
-			System.out.println("JWT Token " + token.getHeaders());
+			System.out.println("JWT Token " + token.getTokenValue());
+            JWKTokenVerifier.verify(token.getTokenValue());
 
 			for (Object item : userAttributes.entrySet())
 			{
